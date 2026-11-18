@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Academia de Innovación · Achievers Lab</title>
+<meta name="description" content="Regístrate y conoce la Academia Virtual de Innovación de Achievers Lab.">
+<meta name="theme-color" content="#0B2654">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --noche: #0B2654; --morado: #762DA6; --marfil: #FBF9FD; --turquesa: #5CD9DA;
+    --amarillo: #FECE27; --naranja: #FE7F3D; --texto: #1d2433; --suave: #5b6478;
+    --borde: #d9d3e6; --error: #c0392b; --radio: 16px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--marfil); color: var(--texto);
+    font: 18px/1.5 "DM Sans", Inter, system-ui, sans-serif; }
+  h1, h2, h3 { font-family: Poppins, Montserrat, sans-serif; color: var(--noche); line-height: 1.15; margin: 0; }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 20px 16px 48px; }
+  .top { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .top img { width: 44px; height: auto; }
+  .top span { font: 700 17px Poppins, sans-serif; color: var(--noche); }
+  .paso { font-size: 14px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--morado); margin-bottom: 6px; }
+  .hero h1 { font-size: clamp(30px, 8vw, 42px); font-weight: 800; }
+  .hero p { font-size: 19px; color: var(--suave); margin: 12px 0 0; }
+
+  .nota { margin: 22px 0; border-radius: 22px; padding: 26px 22px; color: #fff;
+    background: linear-gradient(140deg, var(--morado) 0%, var(--noche) 100%); box-shadow: 0 12px 30px rgba(11,38,84,.22); }
+  .nota .chip { display: inline-block; background: var(--amarillo); color: var(--noche); font: 800 14px Poppins, sans-serif;
+    border-radius: 999px; padding: 6px 14px; margin-bottom: 14px; }
+  .nota .grande { font: 800 clamp(64px, 20vw, 96px)/1 Poppins, sans-serif; color: var(--amarillo); }
+  .nota .grande small { font-size: .4em; color: #fff; }
+  .nota p { font-size: 21px; line-height: 1.4; margin: 12px 0 0; }
+  .nota b { color: var(--turquesa); }
+
+  h2 { font-size: 26px; margin: 30px 0 6px; }
+  .sub { color: var(--suave); margin: 0 0 16px; }
+  .beneficios { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .beneficios li { display: flex; gap: 14px; background: #fff; border: 1px solid var(--borde); border-radius: var(--radio); padding: 16px; }
+  .ic { flex: 0 0 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font-size: 23px; }
+  .beneficios h3 { font-size: 18px; margin-bottom: 3px; }
+  .beneficios p { margin: 0; color: var(--suave); font-size: 16.5px; }
+  .metodos { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .metodos span { background: #efe6f7; color: var(--morado); font-weight: 700; font-size: 14px; border-radius: 999px; padding: 5px 12px; }
+
+  .acepto { display: flex; gap: 12px; align-items: flex-start; margin: 26px 0 16px; background: #fff8dc;
+    border: 2px solid var(--amarillo); border-radius: var(--radio); padding: 16px; font-weight: 500; cursor: pointer; }
+  .acepto input { width: 26px; height: 26px; flex: 0 0 26px; margin: 2px 0 0; accent-color: var(--morado); }
+  .btn { display: block; width: 100%; border: 0; border-radius: 999px; padding: 18px 20px; cursor: pointer;
+    font: 800 19px Poppins, sans-serif; color: var(--noche); background: var(--amarillo); box-shadow: 0 6px 0 #d7a90b; }
+  .btn:active { transform: translateY(3px); box-shadow: 0 3px 0 #d7a90b; }
+  .btn[disabled] { background: #e7e3ee; color: #9a93a8; box-shadow: none; cursor: not-allowed; }
+  .ayuda { text-align: center; color: var(--suave); font-size: 15px; margin-top: 10px; }
+
+  .card { background: #fff; border: 1px solid var(--borde); border-radius: 22px; padding: 22px 18px; margin-top: 18px; }
+  .resumen { display: flex; gap: 12px; align-items: center; background: #efe6f7; border-radius: var(--radio); padding: 12px 14px; font-size: 16px; }
+  .resumen b { color: var(--morado); font-size: 22px; font-family: Poppins, sans-serif; }
+  .campo { margin-top: 18px; position: relative; }
+  label.l { display: block; font-weight: 700; color: var(--noche); margin-bottom: 6px; }
+  label.l i { color: var(--naranja); font-style: normal; }
+  .in { width: 100%; font: inherit; font-size: 18px; color: var(--texto); background: #fff; border: 2px solid var(--borde);
+    border-radius: 14px; padding: 14px; outline: none; }
+  .in:focus { border-color: var(--morado); box-shadow: 0 0 0 4px rgba(118,45,166,.12); }
+  .campo.mal .in { border-color: var(--error); }
+  .err { display: none; color: var(--error); font-size: 15px; margin-top: 5px; }
+  .campo.mal .err { display: block; }
+
+  /* desplegable con buscador */
+  .combo .in { padding-right: 46px; }
+  .combo::after { content: "▾"; position: absolute; right: 16px; top: 44px; color: var(--morado); font-size: 20px; pointer-events: none; }
+  .lista { display: none; position: absolute; z-index: 10; left: 0; right: 0; margin: 6px 0 0; padding: 6px; list-style: none;
+    background: #fff; border: 2px solid var(--morado); border-radius: 14px; max-height: 280px; overflow-y: auto; box-shadow: 0 14px 30px rgba(11,38,84,.18); }
+  .combo.abierto .lista { display: block; }
+  .lista li { padding: 12px; border-radius: 10px; cursor: pointer; }
+  .lista li[aria-selected="true"], .lista li:hover { background: #efe6f7; }
+  .lista li.vacio { color: var(--suave); cursor: default; background: none; }
+  .lista li.primero { font-weight: 700; color: var(--morado); }
+  .oculto { display: none !important; }
+
+  .fin { position: fixed; inset: 0; background: rgba(11,38,84,.94); color: #fff; display: grid; place-items: center; padding: 24px; text-align: center; z-index: 50; }
+  .fin h2 { color: var(--amarillo); font-size: 34px; margin: 0 0 10px; }
+  .fin p { font-size: 20px; margin: 0 0 22px; }
+  .fin .btn { max-width: 360px; margin: 0 auto; }
+  .aviso { background: #fdecea; color: var(--error); border-radius: 12px; padding: 12px; margin-top: 14px; display: none; }
+  footer { text-align: center; color: var(--suave); font-size: 14px; margin-top: 28px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><img src="logo.png" alt=""><span>Achievers Lab</span></div>
+
+  <!-- PASO 1: la academia (obligatorio leerla) -->
+  <section id="paso1">
+    <div class="hero">
+      <div class="paso">Paso 1 de 2 · Lee esto primero</div>
+      <h1>Conoce nuestra Academia Virtual de Innovación</h1>
+      <p>Aprende a innovar haciendo, con los mismos métodos que usamos con empresas reales.</p>
+    </div>
+
+    <div class="nota">
+      <span class="chip">🎓 Para quien ve Innovación y Emprendimiento</span>
+      <div class="grande">5,0<small> / 5,0</small></div>
+      <p>Si inscribes el curso <b>Innovación y Emprendimiento</b> el próximo semestre y haces esta academia, <b>sacas 5 sobre 5 en el 15 %</b> de la nota.</p>
+    </div>
+
+    <h2>Y no es solo la nota</h2>
+    <p class="sub">Esto es lo que te llevas de la academia:</p>
+    <ul class="beneficios">
+      <li><div class="ic" style="background:#efe6f7">🧠</div><div>
+        <h3>Entiendes los métodos de innovación</h3>
+        <p>Y los aplicas, no solo los memorizas.</p>
+        <div class="metodos"><span>Innovator's DNA</span><span>Innovator's Method</span><span>Lean Startup</span><span>Value Lab</span><span>Lean LaunchPad</span></div>
+      </div></li>
+      <li><div class="ic" style="background:#dcf7f7">🏢</div><div>
+        <h3>Contacto con empresas reales</h3>
+        <p>Trabajas sobre retos que proponen empresas y te preparas para los JAM del próximo semestre.</p>
+      </div></li>
+      <li><div class="ic" style="background:#fff3cc">🤝</div><div>
+        <h3>Networking</h3>
+        <p>Conoces gente de otras carreras, a la comunidad de Achievers y a las empresas con las que trabajamos.</p>
+      </div></li>
+      <li><div class="ic" style="background:#ffe6d9">🛠️</div><div>
+        <h3>Resuelves problemas de verdad</h3>
+        <p>Los de tu trabajo, tu empresa o tu emprendimiento, y también los de tu vida.</p>
+      </div></li>
+      <li><div class="ic" style="background:#efe6f7">🧬</div><div>
+        <h3>Descubres tu perfil de innovador</h3>
+        <p>Sabes en qué eres fuerte (cuestionar, observar, asociar, hacer networking, experimentar) y qué te falta.</p>
+      </div></li>
+      <li><div class="ic" style="background:#dcf7f7">🧪</div><div>
+        <h3>Pruebas ideas barato y rápido</h3>
+        <p>Aprendes a plantear hipótesis y experimentos antes de gastar tiempo y plata.</p>
+      </div></li>
+      <li><div class="ic" style="background:#fff3cc">✨</div><div>
+        <h3>Usas IA para mostrar tus ideas</h3>
+        <p>Creas snippets (una imagen, una maqueta, un anuncio) en minutos para probar con personas reales.</p>
+      </div></li>
+      <li><div class="ic" style="background:#ffe6d9">🎤</div><div>
+        <h3>Aprendes a venderla en un pitch</h3>
+        <p>Storytelling y pitch para presentar tu idea con seguridad.</p>
+      </div></li>
+      <li><div class="ic" style="background:#efe6f7">📱</div><div>
+        <h3>100 % virtual</h3>
+        <p>Videos, ejemplos y ejercicios que haces desde el celular o el computador.</p>
+      </div></li>
+    </ul>
+
+    <label class="acepto" id="aceptoBox">
+      <input type="checkbox" id="acepto">
+      <span>Leí cómo funciona la academia y el beneficio del <b>5 sobre 5 en el 15 %</b> de Innovación y Emprendimiento.</span>
+    </label>
+    <button class="btn" id="seguir" disabled>Continuar al registro →</button>
+    <p class="ayuda" id="ayuda1">Lee hasta el final y marca la casilla para continuar.</p>
+  </section>
+
+  <!-- PASO 2: el formulario -->
+  <section id="paso2" class="oculto">
+    <div class="paso">Paso 2 de 2 · Tus datos</div>
+    <h1 style="font-size:30px">Regístrate</h1>
+    <div class="resumen" style="margin-top:14px"><b>5/5</b><span>en el 15 % de Innovación y Emprendimiento si haces la academia.</span></div>
+
+    <form id="form" class="card" novalidate>
+      <div class="campo" data-c="nombre">
+        <label class="l" for="nombre">Nombre completo <i>*</i></label>
+        <input class="in" id="nombre" autocomplete="name" maxlength="120" required>
+        <div class="err">Escribe tu nombre completo.</div>
+      </div>
+      <div class="campo" data-c="codigo">
+        <label class="l" for="codigo">Código Uniandes <i>*</i></label>
+        <input class="in" id="codigo" inputmode="numeric" pattern="[0-9]*" maxlength="12" placeholder="Ej.: 202212345" required>
+        <div class="err">Escribe tu código (solo números).</div>
+      </div>
+      <div class="campo combo" data-c="semestre">
+        <label class="l" for="semestre">Semestre <i>*</i></label>
+        <input class="in" id="semestre" placeholder="Busca o elige tu semestre" autocomplete="off" role="combobox" aria-expanded="false">
+        <ul class="lista" role="listbox"></ul>
+        <div class="err">Elige tu semestre de la lista.</div>
+      </div>
+      <div class="campo combo" data-c="facultad">
+        <label class="l" for="facultad">Facultad <i>*</i></label>
+        <input class="in" id="facultad" placeholder="Busca o elige tu facultad" autocomplete="off" role="combobox" aria-expanded="false">
+        <ul class="lista" role="listbox"></ul>
+        <div class="err">Elige tu facultad de la lista.</div>
+      </div>
+      <div class="campo combo oculto" data-c="carrera" id="campoCarrera">
+        <label class="l" for="carrera">Carrera de Ingeniería <i>*</i></label>
+        <input class="in" id="carrera" placeholder="Busca o elige tu carrera" autocomplete="off" role="combobox" aria-expanded="false">
+        <ul class="lista" role="listbox"></ul>
+        <div class="err">Elige tu carrera de la lista.</div>
+      </div>
+      <div class="campo" data-c="telefono">
+        <label class="l" for="telefono">Celular <i>*</i></label>
+        <input class="in" id="telefono" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="Ej.: 300 123 4567" required>
+        <div class="err">Escribe un número de celular válido.</div>
+      </div>
+      <div class="campo" data-c="correo">
+        <label class="l" for="correo">Correo <i>*</i></label>
+        <input class="in" id="correo" type="email" inputmode="email" autocomplete="email" maxlength="120" placeholder="Ej.: tu.correo@uniandes.edu.co" required>
+        <div class="err">Escribe un correo válido.</div>
+      </div>
+      <div class="aviso" id="aviso"></div>
+      <button class="btn" id="enviar" type="submit" style="margin-top:22px">Aceptar y enviar</button>
+      <p class="ayuda">Todos los campos son obligatorios. Al enviar te llevamos al Instagram de Achievers.</p>
+    </form>
+  </section>
+
+  <footer>Achievers Lab · Universidad de los Andes</footer>
+</div>
+
+<div class="fin oculto" id="fin">
+  <div>
+    <h2>¡Listo, quedaste registrado!</h2>
+    <p>Te llevamos al Instagram de Achievers para que no te pierdas la academia.</p>
+    <a class="btn" href="https://www.instagram.com/achieverslab.col/" id="irIg">Ir a @achieverslab.col</a>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://uvodcmmehtghkbwadzlq.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_CLYuajCg_s7EcEQDBkKyNQ__j2Wg_t3';
+const INSTAGRAM = 'https://www.instagram.com/achieverslab.col/';
+const ING = 'Facultad de Ingeniería';
+
+const SEMESTRES = Array.from({length: 11}, (_, i) => `Semestre ${i + 1}`);
+const FACULTADES = [ING, 'Facultad de Administración', 'Facultad de Arquitectura y Diseño', 'Facultad de Artes y Humanidades',
+  'Facultad de Ciencias (incluye Matemáticas, Física, Química, Biología y Geociencias)', 'Facultad de Ciencias Sociales',
+  'Facultad de Derecho', 'Facultad de Economía', 'Facultad de Educación', 'Facultad de Medicina',
+  'Escuela de Gobierno Alberto Lleras Camargo'];
+const CARRERAS = ['Ingeniería Industrial', 'Ingeniería de Sistemas y Computación', 'Ingeniería Ambiental', 'Ingeniería Biomédica',
+  'Ingeniería Civil', 'Ingeniería de Alimentos', 'Ingeniería Eléctrica', 'Ingeniería Electrónica', 'Ingeniería Mecánica',
+  'Ingeniería Química', 'Ciencia de Datos'];
+
+const quitarTildes = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+
+// Desplegable con buscador: solo acepta valores de la lista.
+function combo(campo, opciones, alElegir) {
+  const input = campo.querySelector('input'), lista = campo.querySelector('.lista');
+  let valor = '', activo = -1, visibles = [];
+  const pintar = () => {
+    const q = quitarTildes(input.value === valor ? '' : input.value.trim());
+    visibles = opciones.filter(o => quitarTildes(o).includes(q) || q.split(' ').every(p => quitarTildes(o).includes(p)));
+    lista.innerHTML = visibles.length ? visibles.map((o, i) =>
+      `<li role="option" data-i="${i}" class="${o === opciones[0] && campo.dataset.c === 'facultad' ? 'primero' : ''}" aria-selected="${i === activo}">${o}</li>`).join('')
+      : '<li class="vacio">No hay resultados. Revisa cómo lo escribiste.</li>';
+  };
+  const abrir = () => { campo.classList.add('abierto'); input.setAttribute('aria-expanded', 'true'); activo = -1; pintar(); };
+  const cerrar = () => { campo.classList.remove('abierto'); input.setAttribute('aria-expanded', 'false');
+    if (input.value !== valor) { const exacto = opciones.find(o => quitarTildes(o) === quitarTildes(input.value.trim()));
+      exacto ? elegir(exacto) : (input.value = valor); } };
+  const elegir = o => { valor = o; input.value = o; campo.classList.remove('mal', 'abierto'); input.setAttribute('aria-expanded', 'false'); alElegir && alElegir(o); };
+  input.addEventListener('focus', () => { abrir(); input.select(); });
+  input.addEventListener('input', () => { if (!campo.classList.contains('abierto')) abrir(); activo = 0; pintar(); });
+  input.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); activo = Math.min(activo + 1, visibles.length - 1); pintar(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); activo = Math.max(activo - 1, 0); pintar(); }
+    else if (e.key === 'Enter') { e.preventDefault(); if (visibles[Math.max(activo, 0)]) { elegir(visibles[Math.max(activo, 0)]); input.blur(); } }
+    else if (e.key === 'Escape') { input.blur(); }
+  });
+  lista.addEventListener('mousedown', e => { const li = e.target.closest('li[data-i]'); if (li) { e.preventDefault(); elegir(visibles[+li.dataset.i]); input.blur(); } });
+  input.addEventListener('blur', () => setTimeout(cerrar, 0));
+  return { get valor() { return valor; }, limpiar() { valor = ''; input.value = ''; } };
+}
+
+const cCarrera = combo(document.getElementById('campoCarrera'), CARRERAS);
+const cSemestre = combo(document.querySelector('[data-c="semestre"]'), SEMESTRES);
+const cFacultad = combo(document.querySelector('[data-c="facultad"]'), FACULTADES, f => {
+  const box = document.getElementById('campoCarrera');
+  if (f === ING) box.classList.remove('oculto'); else { box.classList.add('oculto'); cCarrera.limpiar(); }
+});
+
+// Paso 1: hay que llegar al final y marcar la casilla.
+const acepto = document.getElementById('acepto'), seguir = document.getElementById('seguir'), ayuda1 = document.getElementById('ayuda1');
+let llegoAlFinal = false;
+const revisarFinal = () => { if (!llegoAlFinal && document.getElementById('aceptoBox').getBoundingClientRect().top < innerHeight) llegoAlFinal = true; actualizar(); };
+const actualizar = () => { seguir.disabled = !(acepto.checked && llegoAlFinal);
+  ayuda1.textContent = seguir.disabled ? 'Lee hasta el final y marca la casilla para continuar.' : '¡Perfecto! Sigue con tus datos.'; };
+addEventListener('scroll', revisarFinal, { passive: true }); acepto.addEventListener('change', revisarFinal); revisarFinal();
+seguir.addEventListener('click', () => {
+  document.getElementById('paso1').classList.add('oculto'); document.getElementById('paso2').classList.remove('oculto');
+  scrollTo(0, 0); document.getElementById('nombre').focus({ preventScroll: true });
+});
+
+// Paso 2: validar y guardar en la base.
+const val = id => document.getElementById(id).value.trim();
+const marcar = (c, ok) => { document.querySelector(`[data-c="${c}"]`).classList.toggle('mal', !ok); return ok; };
+document.getElementById('form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const datos = {
+    p_nombre: val('nombre'), p_codigo: val('codigo').replace(/\D/g, ''),
+    p_semestre: cSemestre.valor ? parseInt(cSemestre.valor.replace(/\D/g, ''), 10) : 0,
+    p_facultad: cFacultad.valor.startsWith('Facultad de Ciencias (') ? 'Facultad de Ciencias' : cFacultad.valor,
+    p_carrera: cFacultad.valor === ING ? cCarrera.valor : null,
+    p_telefono: val('telefono'), p_correo: val('correo'), p_leyo: acepto.checked,
+    p_origen: new URLSearchParams(location.search).get('o') || 'directo'
+  };
+  const ok = [
+    marcar('nombre', datos.p_nombre.split(/\s+/).length >= 2),
+    marcar('codigo', /^\d{6,12}$/.test(datos.p_codigo)),
+    marcar('semestre', !!cSemestre.valor), marcar('facultad', !!cFacultad.valor),
+    cFacultad.valor === ING ? marcar('carrera', !!cCarrera.valor) : true,
+    marcar('telefono', /^\d{7,15}$/.test(datos.p_telefono.replace(/\D/g, ''))),
+    marcar('correo', /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(datos.p_correo))
+  ].every(Boolean);
+  const aviso = document.getElementById('aviso'); aviso.style.display = 'none';
+  if (!ok) { document.querySelector('.campo.mal')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+  const btn = document.getElementById('enviar'); btn.disabled = true; btn.textContent = 'Enviando…';
+  try {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/academia_registrar`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json', apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` },
+      body: JSON.stringify(datos) });
+    if (!r.ok) throw new Error(await r.text());
+    document.getElementById('fin').classList.remove('oculto');
+    setTimeout(() => location.href = INSTAGRAM, 1800);
+  } catch (err) {
+    aviso.textContent = 'No pudimos guardar tu registro. Revisa tu conexión y vuelve a intentarlo.'; aviso.style.display = 'block';
+    btn.disabled = false; btn.textContent = 'Aceptar y enviar';
+  }
+});
+</script>
+</body>
+</html>
