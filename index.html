@@ -67,6 +67,8 @@
     border-radius: 14px; padding: 14px; outline: none; }
   .in:focus { border-color: var(--morado); box-shadow: 0 0 0 4px rgba(118,45,166,.12); }
   .campo.mal .in { border-color: var(--error); }
+  .opc { color: var(--suave); font-weight: 500; }
+  .nota-campo { color: var(--suave); font-size: 15px; margin-top: 5px; }
   .err { display: none; color: var(--error); font-size: 15px; margin-top: 5px; }
   .campo.mal .err { display: block; }
 
@@ -171,10 +173,12 @@
         <div class="err">Escribe tu nombre completo.</div>
       </div>
       <div class="campo" data-c="codigo">
-        <label class="l" for="codigo">Código Uniandes <i>*</i></label>
-        <input class="in" id="codigo" inputmode="numeric" pattern="[0-9]*" maxlength="12" placeholder="Ej.: 202212345" required>
-        <div class="err">Escribe tu código (solo números).</div>
+        <label class="l" for="codigo">Código Uniandes <span class="opc">(opcional)</span></label>
+        <input class="in" id="codigo" inputmode="numeric" pattern="[0-9]*" maxlength="12" placeholder="Ej.: 202212345">
+        <div class="nota-campo">Si eres de Uniandes, escríbelo y te pedimos semestre, facultad y carrera.</div>
+        <div class="err">El código va solo con números (6 a 12 dígitos), o déjalo vacío.</div>
       </div>
+      <div id="bloqueUniandes" class="oculto">
       <div class="campo combo" data-c="semestre">
         <label class="l" for="semestre">Semestre <i>*</i></label>
         <input class="in" id="semestre" placeholder="Busca o elige tu semestre" autocomplete="off" role="combobox" aria-expanded="false">
@@ -193,6 +197,7 @@
         <ul class="lista" role="listbox"></ul>
         <div class="err">Elige tu carrera de la lista.</div>
       </div>
+      </div>
       <div class="campo" data-c="telefono">
         <label class="l" for="telefono">Celular <i>*</i></label>
         <input class="in" id="telefono" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="Ej.: 300 123 4567" required>
@@ -205,7 +210,7 @@
       </div>
       <div class="aviso" id="aviso"></div>
       <button class="btn" id="enviar" type="submit" style="margin-top:22px">Aceptar y enviar</button>
-      <p class="ayuda">Todos los campos son obligatorios. Al enviar te llevamos al Instagram de Achievers.</p>
+      <p class="ayuda">Los campos con * son obligatorios. Al enviar te llevamos al Instagram de Achievers.</p>
     </form>
   </section>
 
@@ -285,24 +290,34 @@ seguir.addEventListener('click', () => {
   scrollTo(0, 0); document.getElementById('nombre').focus({ preventScroll: true });
 });
 
+// El código es opcional; si lo escriben, aparecen semestre, facultad y carrera (obligatorios).
+const bloque = document.getElementById('bloqueUniandes');
+const tieneCodigo = () => document.getElementById('codigo').value.trim() !== '';
+document.getElementById('codigo').addEventListener('input', () => {
+  bloque.classList.toggle('oculto', !tieneCodigo());
+  if (!tieneCodigo()) bloque.querySelectorAll('.campo').forEach(c => c.classList.remove('mal'));
+});
+
 // Paso 2: validar y guardar en la base.
 const val = id => document.getElementById(id).value.trim();
 const marcar = (c, ok) => { document.querySelector(`[data-c="${c}"]`).classList.toggle('mal', !ok); return ok; };
 document.getElementById('form').addEventListener('submit', async e => {
   e.preventDefault();
+  const conCodigo = tieneCodigo();
   const datos = {
-    p_nombre: val('nombre'), p_codigo: val('codigo').replace(/\D/g, ''),
-    p_semestre: cSemestre.valor ? parseInt(cSemestre.valor.replace(/\D/g, ''), 10) : 0,
-    p_facultad: cFacultad.valor.startsWith('Facultad de Ciencias (') ? 'Facultad de Ciencias' : cFacultad.valor,
-    p_carrera: cFacultad.valor === ING ? cCarrera.valor : null,
+    p_nombre: val('nombre'), p_codigo: conCodigo ? val('codigo').replace(/\s/g, '') : null,
+    p_semestre: conCodigo && cSemestre.valor ? parseInt(cSemestre.valor.replace(/\D/g, ''), 10) : null,
+    p_facultad: !conCodigo ? null : (cFacultad.valor.startsWith('Facultad de Ciencias (') ? 'Facultad de Ciencias' : cFacultad.valor),
+    p_carrera: conCodigo && cFacultad.valor === ING ? cCarrera.valor : null,
     p_telefono: val('telefono'), p_correo: val('correo'), p_leyo: acepto.checked,
     p_origen: new URLSearchParams(location.search).get('o') || 'directo'
   };
   const ok = [
     marcar('nombre', datos.p_nombre.split(/\s+/).length >= 2),
-    marcar('codigo', /^\d{6,12}$/.test(datos.p_codigo)),
-    marcar('semestre', !!cSemestre.valor), marcar('facultad', !!cFacultad.valor),
-    cFacultad.valor === ING ? marcar('carrera', !!cCarrera.valor) : true,
+    marcar('codigo', !conCodigo || /^\d{6,12}$/.test(datos.p_codigo)),
+    conCodigo ? marcar('semestre', !!cSemestre.valor) : true,
+    conCodigo ? marcar('facultad', !!cFacultad.valor) : true,
+    conCodigo && cFacultad.valor === ING ? marcar('carrera', !!cCarrera.valor) : true,
     marcar('telefono', /^\d{7,15}$/.test(datos.p_telefono.replace(/\D/g, ''))),
     marcar('correo', /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(datos.p_correo))
   ].every(Boolean);
