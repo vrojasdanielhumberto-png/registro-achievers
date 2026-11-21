@@ -208,6 +208,19 @@
         <input class="in" id="correo" type="email" inputmode="email" autocomplete="email" maxlength="120" placeholder="Ej.: tu.correo@uniandes.edu.co" required>
         <div class="err">Escribe un correo válido.</div>
       </div>
+      <div class="campo" data-c="como">
+        <label class="l" for="como">¿Cómo nos encontraste? <i>*</i></label>
+        <select class="in" id="como" required>
+          <option value="" disabled selected>Elige una opción</option>
+          <option>Alguien de Achievers se me acercó y me habló</option>
+          <option>Vi un QR (afiche, volante o baño)</option>
+          <option>En una clase, nos lo presentaron</option>
+          <option>Por Instagram o redes</option>
+          <option>Un amigo me contó</option>
+          <option>Otro</option>
+        </select>
+        <div class="err">Elige una opción.</div>
+      </div>
       <div class="aviso" id="aviso"></div>
       <button class="btn" id="enviar" type="submit" style="margin-top:22px">Aceptar y enviar</button>
       <p class="ayuda">Los campos con * son obligatorios. Al enviar te llevamos al Instagram de Achievers.</p>
@@ -310,7 +323,8 @@ document.getElementById('form').addEventListener('submit', async e => {
     p_facultad: !conCodigo ? null : (cFacultad.valor.startsWith('Facultad de Ciencias (') ? 'Facultad de Ciencias' : cFacultad.valor),
     p_carrera: conCodigo && cFacultad.valor === ING ? cCarrera.valor : null,
     p_telefono: val('telefono'), p_correo: val('correo'), p_leyo: acepto.checked,
-    p_origen: new URLSearchParams(location.search).get('o') || 'directo'
+    p_origen: new URLSearchParams(location.search).get('o') || 'directo',
+    p_como: val('como')
   };
   const ok = [
     marcar('nombre', datos.p_nombre.split(/\s+/).length >= 2),
@@ -319,7 +333,8 @@ document.getElementById('form').addEventListener('submit', async e => {
     conCodigo ? marcar('facultad', !!cFacultad.valor) : true,
     conCodigo && cFacultad.valor === ING ? marcar('carrera', !!cCarrera.valor) : true,
     marcar('telefono', /^\d{7,15}$/.test(datos.p_telefono.replace(/\D/g, ''))),
-    marcar('correo', /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(datos.p_correo))
+    marcar('correo', /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(datos.p_correo)),
+    marcar('como', !!datos.p_como)
   ].every(Boolean);
   const aviso = document.getElementById('aviso'); aviso.style.display = 'none';
   if (!ok) { document.querySelector('.campo.mal')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
